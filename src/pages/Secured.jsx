@@ -12,7 +12,7 @@ class Secured extends React.Component {
 
     async componentWillMount(){
         const keycloak = KeyCloak('/keycloak.json');
-        const authenticated = await keycloak.init({onLoad: 'login-required'});
+        const authenticated = await keycloak.init({onLoad: 'login-required', flow: 'implicit'});
         this.setState({keycloak, authenticated})
     }
 
@@ -26,7 +26,7 @@ class Secured extends React.Component {
                 </div>
                 <div>
                     <CreatePerson keycloak={this.state.keycloak}/>
-                    <Logout keycloak={this.state.keycloak} />
+                    {/*<Logout keycloak={this.state.keycloak} />*/}
                 </div>
             </div>;
             }
