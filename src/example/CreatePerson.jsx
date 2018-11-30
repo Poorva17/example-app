@@ -5,64 +5,44 @@ class CreatePerson extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isCreated: false
+            isSuccess: false
         };
-        this.sendCreateRequest = this.sendCreateRequest.bind(this)
-        this.sendDeleteRequest = this.sendDeleteRequest.bind(this)
     }
 
-    sendCreateRequest() {
+    sendCreateRequest = () =>  {this.sendRequest("POST")};
+
+    sendDeleteRequest = () => {this.sendRequest("DELETE")};
+
+    sendUpdateRequest = () => {this.sendRequest("PUT")};
+
+    sendRequest = (method) => {
         setTimeout(async () => {
             const keycloak = await this.props.keycloak;
 
-            console.log("******token*****");
-            console.log(keycloak.token);
-
             const response =  await fetch("http://localhost:9003/person", {
-                method: 'POST',
+                method: method,
                 headers: {
                     "Authorization" : `Bearer ${keycloak.token}`
                 }
             });
 
-            this.setState({isCreated: response.ok})
-        }, 2000);
-    }
+            if(response.ok) {
+                alert("Action successful")
+            } else {
+                alert("Action failed")
+            }
 
-    sendDeleteRequest() {
-        setTimeout(async () => {
-            const keycloak = await this.props.keycloak;
-
-            console.log("******token*****");
-            console.log(keycloak.token);
-
-            const response =  await fetch("http://localhost:9003/person", {
-                method: 'DELETE',
-                headers: {
-                    "Authorization" : `Bearer ${keycloak.token}`
-                }
-            });
-
-            this.setState({isCreated: response.ok})
         }, 3000);
-    }
+    };
 
     render() {
-        if(this.state.isCreated) {
-             return <div>
-                 <div>Person created successfully</div>
-                 <button onClick={this.sendCreateRequest}>Create</button>
-                 <button onClick={this.sendDeleteRequest}>Delete</button>
-             </div>
-
-        } else {
-            return <div>
-                <div>Person creation failed. Trying again...</div>
-                <button onClick={this.sendCreateRequest}>Create</button>
-                <button onClick={this.sendDeleteRequest}>Delete</button>
-            </div>
-
-        }
+        return <div>
+            <button onClick={this.sendCreateRequest}>Create Person</button>
+            <br/>
+            <button onClick={this.sendDeleteRequest}>Delete Person</button>
+            <br/>
+            <button onClick={this.sendUpdateRequest}>Update Person</button>
+        </div>
     }
 }
 

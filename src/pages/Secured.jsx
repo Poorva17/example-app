@@ -13,13 +13,7 @@ class Secured extends React.Component {
     async componentWillMount(){
         const keycloak = KeyCloak('/keycloak.json');
         keycloak.onTokenExpired = () => {
-            keycloak.updateToken(0).success(function(refreshed) {
-               if (refreshed) {
-                     alert('Token was successfully refreshed');
-                   } else {
-                     alert('Token is still valid');
-                   }
-             }).error(function() {
+            keycloak.updateToken(0).error(function() {
                alert('Failed to refresh the token, or the session has expired');
              });
         };
