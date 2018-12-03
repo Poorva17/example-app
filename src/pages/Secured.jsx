@@ -13,7 +13,11 @@ class Secured extends React.Component {
     async componentWillMount(){
         const keycloak = KeyCloak('/keycloak.json');
         keycloak.onTokenExpired = () => {
-            keycloak.updateToken(0).error(function() {
+            keycloak.updateToken(0)
+                .success(function () {
+                  alert("token refreshed successfully")
+                })
+                .error(function() {
                alert('Failed to refresh the token, or the session has expired');
              });
         };
@@ -24,7 +28,7 @@ class Secured extends React.Component {
     render() {
         if(this.state.keycloak){
             if(this.state.authenticated){
-            return <div>
+            return <div className="card-content white-text">
                 <h3>Secured Functionality</h3>
                 <div>
                     This is a keycloak secured page
@@ -43,7 +47,7 @@ class Secured extends React.Component {
             }
         }
         else{
-            return <div>
+            return <div className="card-content white-text">
                 <h3>Initialising keycloak....</h3>
                 <div>Logging in</div>
             </div>

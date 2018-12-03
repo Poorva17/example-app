@@ -9,7 +9,7 @@ import '../main.css'
 class Master extends React.Component {
     render() {
         return <BrowserRouter>
-            <div style={{"padding": "10px"}}>
+            <div style={{"textAlign":"center"}} className=" row card blue-grey darken-1 col s12 m7">
                 <NavComponent/>
                 <Route exact path="/" component={Welcome}/>
                 <Route path="/secured" component={Secured}/>
