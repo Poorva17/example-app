@@ -15,7 +15,7 @@ class Secured extends React.Component {
         keycloak.onTokenExpired = () => {
             keycloak.updateToken(0)
                 .success(function () {
-                  alert("token refreshed successfully")
+                  console.log("token refreshed successfully")
                 })
                 .error(function() {
                alert('Failed to refresh the token, or the session has expired');
